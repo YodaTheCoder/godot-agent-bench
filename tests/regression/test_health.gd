@@ -35,3 +35,27 @@ func test_heal_restores_health_below_max() -> void:
 	health.damage(50)
 	health.heal(20)
 	assert_eq(health.current, 70)
+
+
+func test_heal_caps_at_max_health() -> void:
+	health.damage(10)
+	health.heal(50)
+	assert_eq(health.current, 100)
+
+
+func test_heal_at_full_health_stays_at_max() -> void:
+	health.heal(25)
+	assert_eq(health.current, 100)
+
+
+func test_heal_caps_at_custom_max_health() -> void:
+	health.max_health = 40
+	health.damage(10)
+	health.heal(100)
+	assert_eq(health.current, 40)
+
+
+func test_heal_does_not_revive_dead() -> void:
+	health.damage(100)
+	health.heal(20)
+	assert_eq(health.current, 0)
