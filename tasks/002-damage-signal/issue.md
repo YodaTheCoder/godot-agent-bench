@@ -42,3 +42,4 @@ Other code (HUD, hit flashes, sounds) needs to react to every hit, not only to d
 - At 100/100, `damage(150)` emits `damaged(100, 0)`, then `died`.
 - After death, a further `damage(10)` does not emit `damaged`.
 - The tests in `tests/regression/` still pass.
+- The test runner treats any engine error or `push_error` raised while a test runs as a failure.

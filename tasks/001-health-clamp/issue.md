@@ -37,3 +37,4 @@ signal unchanged.
 - `max_health = 40`, `damage(10)`, then `heal(100)` → `current == 40`.
 - `damage(100)` (dead), then `heal(20)` → `current == 0`.
 - Existing behaviour and the tests in `tests/regression/` still pass.
+- The test runner treats any engine error or `push_error` raised while a test runs as a failure.

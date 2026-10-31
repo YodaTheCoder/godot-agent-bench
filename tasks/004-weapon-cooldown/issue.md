@@ -44,3 +44,5 @@ With `fire_rate = 0.5` (one shot every 2 s): `try_fire(0.0)` → `true`,
 `try_fire(1.5)` → `false`, `try_fire(2.0)` → `true`.
 
 The tests in `tests/regression/` still pass.
+
+The test runner treats any engine error or `push_error` raised while a test runs as a failure.

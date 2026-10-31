@@ -61,3 +61,4 @@ add_points(10, 4.0)   # 3.0 s gap: combo back to 1 -> score 70
 - `reset()` after a combo, then `add_points(10, 1.0)`: `score == 10`, `combo == 1`.
 - `ScoreManager.add_points(10)` followed by `ScoreManager.add_points(5)` still gives 15,
   and the tests in `tests/regression/` still pass.
+- The test runner treats any engine error or `push_error` raised while a test runs as a failure.

@@ -49,8 +49,10 @@ non-null, empty inventory.
   - `@export var item_id: StringName`
   - `@export var qty := 1` (an `int`)
   - `func _on_body_entered(body: Node2D) -> void`
-- The root's `body_entered` signal must be connected to `_on_body_entered` (either in the
-  scene file or in `_ready()`), so a body entering the area triggers it.
+- The root's `body_entered` signal must be connected directly to `_on_body_entered`
+  (either in the scene file or in `_ready()`; not a deferred connection such as
+  `CONNECT_DEFERRED` or `call_deferred`), so that emitting `body_entered` runs the handler
+  immediately, in the same frame.
 - `_on_body_entered(body)`:
   - if `body` is a `Player`: call `body.inventory.add(item_id, qty)`, then `queue_free()`
     the pickup;
@@ -73,3 +75,4 @@ non-null, empty inventory.
 - `_on_body_entered` with a body that is not a `Player` (e.g. a `StaticBody2D`) leaves
   the pickup in place (not queued for deletion).
 - The tests in `tests/regression/` still pass.
+- The test runner treats any engine error or `push_error` raised while a test runs as a failure.

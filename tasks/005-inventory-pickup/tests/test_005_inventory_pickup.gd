@@ -9,6 +9,8 @@ func _make_pickup(item: StringName, amount: int) -> Area2D:
 	var pickup: Area2D = load("res://scenes/pickup.tscn").instantiate()
 	pickup.set("item_id", item)
 	pickup.set("qty", amount)
+	# Keep it well away from the player (at the origin) so physics can never overlap them.
+	pickup.position = Vector2(1000, 1000)
 	add_child_autofree(pickup)
 	return pickup
 

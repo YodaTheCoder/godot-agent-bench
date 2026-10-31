@@ -23,7 +23,7 @@ func before_each() -> void:
 
 
 func after_each() -> void:
-	for p in [PATH, OTHER_PATH, MISSING_PATH]:
+	for p in [PATH, OTHER_PATH, MISSING_PATH, DEFAULT_PATH]:
 		_remove(p)
 	ScoreManager.reset()
 

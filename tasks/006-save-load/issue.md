@@ -54,6 +54,10 @@ inventory yet, so `save` stores an empty `Dictionary` and `load_into` ignores th
   - If there is no file at `path`, or the file does not load as a `SaveData`, return
     `false` and change nothing (`ScoreManager.score` and the player's health stay as
     they were).
+  - A missing file is a normal case, not an error: return `false` without printing an
+    engine error and without calling `push_error`. Check first with
+    `ResourceLoader.exists(path)` or `FileAccess.file_exists(path)` instead of calling
+    `ResourceLoader.load` on a path that may not exist (that prints an engine error).
   - Otherwise set `ScoreManager.score = data.score` and the player's `Health` child's
     `current = data.player_health`, and return `true`.
   - It must read the file as it is on disk now: if the same path was saved, loaded and
@@ -76,3 +80,4 @@ inventory yet, so `save` stores an empty `Dictionary` and `load_into` ignores th
 - `SaveGame.save(player)` / `SaveGame.load_into(player)` with no path use
   `user://save.tres`.
 - The tests in `tests/regression/` still pass.
+- The test runner treats any engine error or `push_error` raised while a test runs as a failure.
