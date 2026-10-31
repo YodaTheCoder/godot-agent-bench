@@ -1,0 +1,172 @@
+diff --git a/scenes/player.tscn b/scenes/player.tscn
+index 72c3a30..9d3ed2f 100644
+--- a/scenes/player.tscn
++++ b/scenes/player.tscn
+@@ -3,6 +3,7 @@
+ [ext_resource type="Script" path="res://scripts/player.gd" id="1_player"]
+ [ext_resource type="Script" path="res://scripts/components/health.gd" id="2_health"]
+ [ext_resource type="Script" path="res://scripts/weapon.gd" id="3_weapon"]
++[ext_resource type="Script" path="res://scripts/components/status_effects.gd" id="4_status"]
+ 
+ [sub_resource type="CircleShape2D" id="CircleShape2D_player"]
+ radius = 16.0
+@@ -23,3 +24,6 @@ script = ExtResource("2_health")
+ 
+ [node name="Weapon" type="Node" parent="."]
+ script = ExtResource("3_weapon")
++
++[node name="StatusEffects" type="Node" parent="."]
++script = ExtResource("4_status")
+diff --git a/scripts/components/status_effects.gd b/scripts/components/status_effects.gd
+new file mode 100644
+index 0000000..b617ab7
+--- /dev/null
++++ b/scripts/components/status_effects.gd
+@@ -0,0 +1,41 @@
++class_name StatusEffects
++extends Node
++## Holds the status effects active on the parent node and ticks them.
++
++var _effects: Array[StatusEffect] = []
++var _remaining: Array[float] = []
++
++
++func _physics_process(delta: float) -> void:
++	tick(delta)
++
++
++func add(effect: StatusEffect) -> void:
++	_effects.append(effect)
++	_remaining.append(effect.duration)
++
++
++## Advances every effect by `delta` seconds (at most its remaining time) and removes
++## the ones that have run for their whole duration.
++func tick(delta: float) -> void:
++	var target := get_parent()
++	for i in range(_effects.size() - 1, -1, -1):
++		var step := minf(delta, _remaining[i])
++		_effects[i].apply_tick(target, step)
++		_remaining[i] -= step
++		if _remaining[i] <= 0.0:
++			_effects.remove_at(i)
++			_remaining.remove_at(i)
++
++
++func active_count() -> int:
++	return _effects.size()
++
++
++## Product of the multipliers of all active Slow effects (1.0 when there are none).
++func speed_multiplier() -> float:
++	var result := 1.0
++	for effect in _effects:
++		if effect is Slow:
++			result *= (effect as Slow).multiplier
++	return result
+diff --git a/scripts/components/status_effects.gd.uid b/scripts/components/status_effects.gd.uid
+new file mode 100644
+index 0000000..cc6d56e
+--- /dev/null
++++ b/scripts/components/status_effects.gd.uid
+@@ -0,0 +1 @@
++uid://b2v7x1n00kh64
+diff --git a/scripts/effects/poison.gd b/scripts/effects/poison.gd
+new file mode 100644
+index 0000000..9d00025
+--- /dev/null
++++ b/scripts/effects/poison.gd
+@@ -0,0 +1,18 @@
++class_name Poison
++extends StatusEffect
++
++@export var damage_per_second := 5.0
++
++## Damage owed but not yet dealt (Health only takes whole points).
++var _pending := 0.0
++
++
++func apply_tick(target: Node, delta: float) -> void:
++	var health := target.get_node_or_null("Health") as Health
++	if health == null:
++		return
++	_pending += damage_per_second * delta
++	var whole := floori(_pending)
++	if whole > 0:
++		_pending -= whole
++		health.damage(whole)
+diff --git a/scripts/effects/poison.gd.uid b/scripts/effects/poison.gd.uid
+new file mode 100644
+index 0000000..503d4ad
+--- /dev/null
++++ b/scripts/effects/poison.gd.uid
+@@ -0,0 +1 @@
++uid://bhevn0swyylhi
+diff --git a/scripts/effects/slow.gd b/scripts/effects/slow.gd
+new file mode 100644
+index 0000000..7d9c445
+--- /dev/null
++++ b/scripts/effects/slow.gd
+@@ -0,0 +1,5 @@
++class_name Slow
++extends StatusEffect
++
++## Factor applied to the target's movement speed while active.
++@export var multiplier := 0.5
+diff --git a/scripts/effects/slow.gd.uid b/scripts/effects/slow.gd.uid
+new file mode 100644
+index 0000000..3744365
+--- /dev/null
++++ b/scripts/effects/slow.gd.uid
+@@ -0,0 +1 @@
++uid://bx8mqf6gtk0uq
+diff --git a/scripts/effects/status_effect.gd b/scripts/effects/status_effect.gd
+new file mode 100644
+index 0000000..ab8882d
+--- /dev/null
++++ b/scripts/effects/status_effect.gd
+@@ -0,0 +1,10 @@
++class_name StatusEffect
++extends Resource
++
++## How long the effect lasts, in seconds.
++@export var duration := 1.0
++
++
++## Applies `delta` seconds of this effect to `target`. The base effect does nothing.
++func apply_tick(_target: Node, _delta: float) -> void:
++	pass
+diff --git a/scripts/effects/status_effect.gd.uid b/scripts/effects/status_effect.gd.uid
+new file mode 100644
+index 0000000..7baeccf
+--- /dev/null
++++ b/scripts/effects/status_effect.gd.uid
+@@ -0,0 +1 @@
++uid://b66mln88scu5c
+diff --git a/scripts/player.gd b/scripts/player.gd
+index 9ac375c..49c0fbb 100644
+--- a/scripts/player.gd
++++ b/scripts/player.gd
+@@ -4,15 +4,21 @@ extends CharacterBody2D
+ @export var speed := 200.0
+ 
+ @onready var weapon: Weapon = $Weapon
++@onready var status_effects: StatusEffects = $StatusEffects
+ 
+ 
+ static func compute_velocity(input: Vector2, speed: float) -> Vector2:
+ 	return input.normalized() * speed
+ 
+ 
++## `speed` after status effects (e.g. Slow).
++func effective_speed() -> float:
++	return speed * status_effects.speed_multiplier()
++
++
+ func _physics_process(_delta: float) -> void:
+ 	var input := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+-	velocity = compute_velocity(input, speed)
++	velocity = compute_velocity(input, effective_speed())
+ 	move_and_slide()
+ 	if Input.is_action_pressed("ui_accept"):
+ 		weapon.try_fire(Time.get_ticks_msec() / 1000.0)
