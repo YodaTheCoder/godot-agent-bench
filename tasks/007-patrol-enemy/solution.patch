@@ -1,0 +1,60 @@
+diff --git a/scenes/patrol_enemy.tscn b/scenes/patrol_enemy.tscn
+new file mode 100644
+index 0000000..868b7aa
+--- /dev/null
++++ b/scenes/patrol_enemy.tscn
+@@ -0,0 +1,7 @@
++[gd_scene format=3]
++
++[ext_resource type="PackedScene" path="res://scenes/enemy.tscn" id="1_enemy"]
++[ext_resource type="Script" path="res://scripts/patrol_enemy.gd" id="2_patrol"]
++
++[node name="PatrolEnemy" instance=ExtResource("1_enemy")]
++script = ExtResource("2_patrol")
+diff --git a/scripts/patrol_enemy.gd b/scripts/patrol_enemy.gd
+new file mode 100644
+index 0000000..ed9a6e3
+--- /dev/null
++++ b/scripts/patrol_enemy.gd
+@@ -0,0 +1,34 @@
++class_name PatrolEnemy
++extends Enemy
++
++## Distance (pixels) at which a waypoint counts as reached.
++const ARRIVE_DISTANCE := 4.0
++
++## Patrol route, in global coordinates. Visited in order, then from the start again.
++@export var waypoints: PackedVector2Array
++## The enemy chases `target` while it is at most this many pixels away.
++@export var aggro_range := 150.0
++
++var _waypoint_index := 0
++
++
++func _physics_process(_delta: float) -> void:
++	if is_chasing():
++		velocity = direction_to_target() * speed
++	elif waypoints.is_empty():
++		velocity = Vector2.ZERO
++	else:
++		if global_position.distance_to(waypoints[_waypoint_index]) <= ARRIVE_DISTANCE:
++			_waypoint_index = (_waypoint_index + 1) % waypoints.size()
++		velocity = global_position.direction_to(waypoints[_waypoint_index]) * speed
++	move_and_slide()
++
++
++func next_waypoint_index() -> int:
++	return _waypoint_index
++
++
++func is_chasing() -> bool:
++	if target == null:
++		return false
++	return global_position.distance_to(target.global_position) <= aggro_range
+diff --git a/scripts/patrol_enemy.gd.uid b/scripts/patrol_enemy.gd.uid
+new file mode 100644
+index 0000000..2dd2027
+--- /dev/null
++++ b/scripts/patrol_enemy.gd.uid
+@@ -0,0 +1 @@
++uid://sasattrus3ic
