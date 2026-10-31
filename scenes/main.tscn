@@ -3,6 +3,20 @@
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/enemy.tscn" id="2_enemy"]
 [ext_resource type="PackedScene" path="res://scenes/hud.tscn" id="3_hud"]
+[ext_resource type="Script" path="res://scripts/wave_spawner.gd" id="4_spawner"]
+[ext_resource type="Script" path="res://scripts/wave_config.gd" id="5_wave"]
+
+[sub_resource type="Resource" id="Resource_wave1"]
+script = ExtResource("5_wave")
+enemy_scene = ExtResource("2_enemy")
+count = 3
+interval = 1.0
+
+[sub_resource type="Resource" id="Resource_wave2"]
+script = ExtResource("5_wave")
+enemy_scene = ExtResource("2_enemy")
+count = 5
+interval = 0.5
 
 [node name="Main" type="Node2D"]
 
@@ -18,3 +32,10 @@ position = Vector2(1050, 550)
 target = NodePath("../Player")
 
 [node name="HUD" parent="." instance=ExtResource("3_hud")]
+
+[node name="WaveSpawner" type="Node2D" parent="." node_paths=PackedStringArray("target")]
+position = Vector2(576, 40)
+script = ExtResource("4_spawner")
+waves = Array[ExtResource("5_wave")]([SubResource("Resource_wave1"), SubResource("Resource_wave2")])
+autostart = true
+target = NodePath("../Player")
