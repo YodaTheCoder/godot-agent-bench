@@ -13,6 +13,8 @@ see that repo for how it is used.
 | `scripts/weapon.gd` | `Weapon`: fire-rate cooldown |
 | `scripts/player.gd` | `Player`: movement and firing |
 | `scripts/enemy.gd` | `Enemy`: chases its target, awards points on death |
+| `scripts/wave_config.gd` | `WaveConfig` resource: enemy scene, count and interval for one wave |
+| `scripts/wave_spawner.gd` | `WaveSpawner`: releases enemies in timed waves |
 | `scripts/hud.gd` | `HUD`: score label |
 | `scripts/score_manager.gd` | `ScoreManager` autoload: the running score |
 | `scenes/` | Player, enemy, HUD and main scenes |
