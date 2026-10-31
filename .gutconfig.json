@@ -1,5 +1,12 @@
 {
-  "dirs": ["res://tests/regression"],
+  "dirs": [
+    "res://tests/regression"
+  ],
   "include_subdirs": true,
-  "log_level": 1
+  "log_level": 1,
+  "failure_error_types": [
+    "engine",
+    "gut",
+    "push_error"
+  ]
 }
