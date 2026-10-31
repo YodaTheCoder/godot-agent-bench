@@ -10,8 +10,10 @@ see that repo for how it is used.
 | Path | Contents |
 | --- | --- |
 | `scripts/components/health.gd` | `Health` component: damage, heal, `died` signal |
+| `scripts/components/status_effects.gd` | `StatusEffects` component: timed effects on its parent |
+| `scripts/effects/` | `StatusEffect` resources: `Poison` (damage over time), `Slow` (speed multiplier) |
 | `scripts/weapon.gd` | `Weapon`: fire-rate cooldown |
-| `scripts/player.gd` | `Player`: movement and firing |
+| `scripts/player.gd` | `Player`: movement (slowed by status effects) and firing |
 | `scripts/enemy.gd` | `Enemy`: chases its target, awards points on death |
 | `scripts/hud.gd` | `HUD`: score label |
 | `scripts/score_manager.gd` | `ScoreManager` autoload: the running score |
