@@ -1,0 +1,89 @@
+diff --git a/scenes/pickup.tscn b/scenes/pickup.tscn
+new file mode 100644
+index 0000000..f9a1acd
+--- /dev/null
++++ b/scenes/pickup.tscn
+@@ -0,0 +1,16 @@
++[gd_scene format=3]
++
++[ext_resource type="Script" path="res://scripts/pickup.gd" id="1_pickup"]
++
++[sub_resource type="CircleShape2D" id="CircleShape2D_pickup"]
++radius = 8.0
++
++[node name="Pickup" type="Area2D"]
++script = ExtResource("1_pickup")
++
++[node name="Body" type="Polygon2D" parent="."]
++color = Color(1, 0.85, 0.2, 1)
++polygon = PackedVector2Array(0, -8, 8, 0, 0, 8, -8, 0)
++
++[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
++shape = SubResource("CircleShape2D_pickup")
+diff --git a/scripts/inventory.gd b/scripts/inventory.gd
+new file mode 100644
+index 0000000..203c3ac
+--- /dev/null
++++ b/scripts/inventory.gd
+@@ -0,0 +1,14 @@
++class_name Inventory
++extends Resource
++
++## Item counts keyed by item id.
++var _counts: Dictionary[StringName, int] = {}
++
++
++func add(item_id: StringName, qty: int = 1) -> void:
++	_counts[item_id] = count(item_id) + qty
++	emit_changed()
++
++
++func count(item_id: StringName) -> int:
++	return _counts.get(item_id, 0)
+diff --git a/scripts/inventory.gd.uid b/scripts/inventory.gd.uid
+new file mode 100644
+index 0000000..8af97f2
+--- /dev/null
++++ b/scripts/inventory.gd.uid
+@@ -0,0 +1 @@
++uid://2tv01cvadhky
+diff --git a/scripts/pickup.gd b/scripts/pickup.gd
+new file mode 100644
+index 0000000..99c6ada
+--- /dev/null
++++ b/scripts/pickup.gd
+@@ -0,0 +1,14 @@
++extends Area2D
++
++@export var item_id: StringName
++@export var qty := 1
++
++
++func _ready() -> void:
++	body_entered.connect(_on_body_entered)
++
++
++func _on_body_entered(body: Node2D) -> void:
++	if body is Player:
++		body.inventory.add(item_id, qty)
++		queue_free()
+diff --git a/scripts/pickup.gd.uid b/scripts/pickup.gd.uid
+new file mode 100644
+index 0000000..50b742d
+--- /dev/null
++++ b/scripts/pickup.gd.uid
+@@ -0,0 +1 @@
++uid://fxmx0c8wbt4s
+diff --git a/scripts/player.gd b/scripts/player.gd
+index 9ac375c..17b83ed 100644
+--- a/scripts/player.gd
++++ b/scripts/player.gd
+@@ -3,6 +3,8 @@ extends CharacterBody2D
+ 
+ @export var speed := 200.0
+ 
++var inventory: Inventory = Inventory.new()
++
+ @onready var weapon: Weapon = $Weapon
+ 
+ 
