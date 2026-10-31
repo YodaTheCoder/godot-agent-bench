@@ -5,7 +5,7 @@ signal died
 
 @export var max_health := 100
 
-var current: int
+var current: int = max_health
 
 
 func _ready() -> void:

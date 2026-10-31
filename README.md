@@ -1,19 +1,11 @@
 # godot-agent-bench
 
-A small Godot 4 top-down game used as the starting point for a coding-agent
-benchmark. It is part of [geekoma9-optimise](https://github.com/YodaTheCoder/geekoma9-optimise),
-which measures how well local coding agents handle realistic game-dev tasks.
-
-The game is deliberately small: a player that moves and fires, enemies that
+A small Godot 4 top-down demo game: a player that moves and fires, enemies that
 chase the player and award points when they die, and a HUD that shows the score.
+It is used as a fixture by [geekoma9-optimise](https://github.com/YodaTheCoder/geekoma9-optimise);
+see that repo for how it is used.
 
 ## Layout
-
-- `main` holds the clean base game (tagged `base-v1`). Agents start from here.
-- The `tests` branch holds the benchmark tasks and their hidden tests.
-- `exp/*` branches hold the evidence from individual benchmark attempts.
-
-In the game itself:
 
 | Path | Contents |
 | --- | --- |
