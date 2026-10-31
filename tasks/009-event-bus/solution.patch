@@ -1,0 +1,64 @@
+diff --git a/project.godot b/project.godot
+index 74a3417..a648455 100644
+--- a/project.godot
++++ b/project.godot
+@@ -16,6 +16,7 @@ config/features=PackedStringArray("4.7")
+ 
+ [autoload]
+ 
++Events="*res://scripts/events.gd"
+ ScoreManager="*res://scripts/score_manager.gd"
+ 
+ [editor_plugins]
+diff --git a/scripts/enemy.gd b/scripts/enemy.gd
+index 192c274..3859980 100644
+--- a/scripts/enemy.gd
++++ b/scripts/enemy.gd
+@@ -24,5 +24,5 @@ func direction_to_target() -> Vector2:
+ 
+ 
+ func _on_health_died() -> void:
+-	ScoreManager.add_points(points)
++	Events.enemy_died.emit(points)
+ 	queue_free()
+diff --git a/scripts/events.gd b/scripts/events.gd
+new file mode 100644
+index 0000000..69d2ec9
+--- /dev/null
++++ b/scripts/events.gd
+@@ -0,0 +1,6 @@
++extends Node
++## Global event bus (autoload `Events`). Gameplay code emits here instead of calling
++## other systems directly.
++
++@warning_ignore("unused_signal")
++signal enemy_died(points: int)
+diff --git a/scripts/events.gd.uid b/scripts/events.gd.uid
+new file mode 100644
+index 0000000..a452abf
+--- /dev/null
++++ b/scripts/events.gd.uid
+@@ -0,0 +1 @@
++uid://hr3g4ge78hfb
+diff --git a/scripts/score_manager.gd b/scripts/score_manager.gd
+index 6f85621..db5e3d3 100644
+--- a/scripts/score_manager.gd
++++ b/scripts/score_manager.gd
+@@ -3,9 +3,17 @@ extends Node
+ var score: int
+ 
+ 
++func _ready() -> void:
++	Events.enemy_died.connect(_on_enemy_died)
++
++
+ func add_points(n: int) -> void:
+ 	score += n
+ 
+ 
+ func reset() -> void:
+ 	score = 0
++
++
++func _on_enemy_died(points: int) -> void:
++	add_points(points)
