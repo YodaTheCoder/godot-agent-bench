@@ -27,3 +27,14 @@ func test_death_awards_points_and_frees_enemy() -> void:
 	health.damage(health.max_health)
 	assert_eq(ScoreManager.score, enemy.points)
 	assert_true(enemy.is_queued_for_deletion())
+
+
+func test_death_emits_enemy_died_once() -> void:
+	watch_signals(Events)
+	enemy.points = 25
+	var health: Health = enemy.get_node("Health")
+	health.damage(health.max_health)
+	assert_signal_emit_count(Events, "enemy_died", 1)
+	assert_signal_emitted_with_parameters(Events, "enemy_died", [25])
+	assert_eq(ScoreManager.score, 25)
+	assert_true(enemy.is_queued_for_deletion())

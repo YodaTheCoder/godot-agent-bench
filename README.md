@@ -12,9 +12,10 @@ see that repo for how it is used.
 | `scripts/components/health.gd` | `Health` component: damage, heal, `died` signal |
 | `scripts/weapon.gd` | `Weapon`: fire-rate cooldown |
 | `scripts/player.gd` | `Player`: movement and firing |
-| `scripts/enemy.gd` | `Enemy`: chases its target, awards points on death |
+| `scripts/enemy.gd` | `Enemy`: chases its target, emits `Events.enemy_died` on death |
 | `scripts/hud.gd` | `HUD`: score label |
-| `scripts/score_manager.gd` | `ScoreManager` autoload: the running score |
+| `scripts/events.gd` | `Events` autoload: global signal bus (`enemy_died`) |
+| `scripts/score_manager.gd` | `ScoreManager` autoload: the running score, fed by `Events.enemy_died` |
 | `scenes/` | Player, enemy, HUD and main scenes |
 | `tests/regression/` | GUT regression tests |
 | `addons/gut/` | Vendored [GUT](https://github.com/bitwes/Gut) 9.7.1 (MIT) |
