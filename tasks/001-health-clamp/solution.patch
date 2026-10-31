@@ -1,0 +1,12 @@
+diff --git a/scripts/components/health.gd b/scripts/components/health.gd
+index 0474d11..c92c83b 100644
+--- a/scripts/components/health.gd
++++ b/scripts/components/health.gd
+@@ -21,4 +21,6 @@ func damage(amount: int) -> void:
+ 
+ 
+ func heal(amount: int) -> void:
+-	current += amount
++	if current == 0:
++		return
++	current = mini(current + amount, max_health)
