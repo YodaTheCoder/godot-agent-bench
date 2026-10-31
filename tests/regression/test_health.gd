@@ -35,3 +35,19 @@ func test_heal_restores_health_below_max() -> void:
 	health.damage(50)
 	health.heal(20)
 	assert_eq(health.current, 70)
+
+
+func test_health_changed_emitted_on_damage_and_heal() -> void:
+	watch_signals(health)
+	health.damage(30)
+	assert_signal_emitted_with_parameters(health, "health_changed", [70, 100], 0)
+	health.heal(5)
+	assert_signal_emitted_with_parameters(health, "health_changed", [75, 100], 1)
+	assert_signal_emit_count(health, "health_changed", 2)
+
+
+func test_health_changed_not_emitted_when_dead() -> void:
+	health.damage(100)
+	watch_signals(health)
+	health.damage(10)
+	assert_signal_not_emitted(health, "health_changed")

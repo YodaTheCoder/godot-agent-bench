@@ -1,7 +1,7 @@
 # godot-agent-bench
 
 A small Godot 4 top-down demo game: a player that moves and fires, enemies that
-chase the player and award points when they die, and a HUD that shows the score.
+chase the player and award points when they die, and a HUD that shows the score and the player's health.
 It is used as a fixture by [geekoma9-optimise](https://github.com/YodaTheCoder/geekoma9-optimise);
 see that repo for how it is used.
 
@@ -9,12 +9,12 @@ see that repo for how it is used.
 
 | Path | Contents |
 | --- | --- |
-| `scripts/components/health.gd` | `Health` component: damage, heal, `died` signal |
+| `scripts/components/health.gd` | `Health` component: damage, heal, `died` and `health_changed` signals |
 | `scripts/weapon.gd` | `Weapon`: fire-rate cooldown |
 | `scripts/player.gd` | `Player`: movement and firing |
 | `scripts/enemy.gd` | `Enemy`: chases its target, awards points on death |
-| `scripts/hud.gd` | `HUD`: score label |
-| `scripts/score_manager.gd` | `ScoreManager` autoload: the running score |
+| `scripts/hud.gd` | `HUD`: score and health labels, updated from signals |
+| `scripts/score_manager.gd` | `ScoreManager` autoload: the running score, `score_changed` signal |
 | `scenes/` | Player, enemy, HUD and main scenes |
 | `tests/regression/` | GUT regression tests |
 | `addons/gut/` | Vendored [GUT](https://github.com/bitwes/Gut) 9.7.1 (MIT) |
