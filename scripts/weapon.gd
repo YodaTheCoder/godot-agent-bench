@@ -8,7 +8,12 @@ var _last_shot_time := -INF
 
 
 func try_fire(now: float) -> bool:
-	if now - _last_shot_time < fire_rate:
+	if now - _last_shot_time < 1.0 / fire_rate:
 		return false
 	_last_shot_time = now
 	return true
+
+
+## Clears the cooldown so the next try_fire succeeds, whatever time it is given.
+func reset() -> void:
+	_last_shot_time = -INF
