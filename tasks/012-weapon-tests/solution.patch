@@ -1,0 +1,101 @@
+diff --git a/scripts/weapon.gd b/scripts/weapon.gd
+index 2155a59..59ff3a3 100644
+--- a/scripts/weapon.gd
++++ b/scripts/weapon.gd
+@@ -8,7 +8,12 @@ var _last_shot_time := -INF
+ 
+ 
+ func try_fire(now: float) -> bool:
+-	if now - _last_shot_time < fire_rate:
++	if now - _last_shot_time < 1.0 / fire_rate:
+ 		return false
+ 	_last_shot_time = now
+ 	return true
++
++
++## Clears the cooldown: the next try_fire() succeeds, whatever time it is given.
++func reset() -> void:
++	_last_shot_time = -INF
+diff --git a/tests/test_weapon_extra.gd b/tests/test_weapon_extra.gd
+new file mode 100644
+index 0000000..4f4d111
+--- /dev/null
++++ b/tests/test_weapon_extra.gd
+@@ -0,0 +1,70 @@
++extends GutTest
++## Weapon cooldown and reset() tests. Uses only the public API: fire_rate,
++## try_fire(now) and reset(). Time values are exact in binary floating point.
++
++var weapon: Weapon
++
++
++func before_each() -> void:
++	weapon = Weapon.new()
++	add_child_autofree(weapon)
++
++
++func test_first_shot_always_fires() -> void:
++	assert_true(weapon.try_fire(0.0))
++
++
++func test_default_rate_is_four_shots_per_second() -> void:
++	assert_true(weapon.try_fire(0.0))
++	assert_false(weapon.try_fire(0.125), "0.125 s after a shot is too soon")
++	assert_false(weapon.try_fire(0.2))
++	assert_true(weapon.try_fire(0.25), "exactly 1 / fire_rate later is allowed")
++
++
++func test_boundary_is_inclusive_at_custom_rate() -> void:
++	weapon.fire_rate = 2.0
++	assert_true(weapon.try_fire(1.0))
++	assert_false(weapon.try_fire(1.25))
++	assert_true(weapon.try_fire(1.5))
++
++
++func test_slow_rate_waits_whole_period() -> void:
++	weapon.fire_rate = 0.5
++	assert_true(weapon.try_fire(0.0))
++	assert_false(weapon.try_fire(1.5))
++	assert_true(weapon.try_fire(2.0))
++
++
++func test_blocked_attempts_do_not_restart_cooldown() -> void:
++	assert_true(weapon.try_fire(0.0))
++	assert_false(weapon.try_fire(0.125))
++	assert_false(weapon.try_fire(0.1875))
++	assert_true(weapon.try_fire(0.25))
++
++
++func test_cooldown_counts_from_last_successful_shot() -> void:
++	assert_true(weapon.try_fire(0.0))
++	assert_true(weapon.try_fire(0.5))
++	assert_false(weapon.try_fire(0.625))
++	assert_true(weapon.try_fire(0.75))
++
++
++func test_reset_allows_immediate_shot() -> void:
++	assert_true(weapon.try_fire(0.0))
++	assert_false(weapon.try_fire(0.0))
++	weapon.reset()
++	assert_true(weapon.try_fire(0.0), "reset clears the cooldown")
++
++
++func test_cooldown_applies_again_after_reset() -> void:
++	assert_true(weapon.try_fire(1.0))
++	weapon.reset()
++	assert_true(weapon.try_fire(1.0))
++	assert_false(weapon.try_fire(1.125))
++	assert_true(weapon.try_fire(1.25))
++
++
++func test_reset_keeps_fire_rate() -> void:
++	weapon.fire_rate = 2.0
++	weapon.reset()
++	assert_eq(weapon.fire_rate, 2.0)
+diff --git a/tests/test_weapon_extra.gd.uid b/tests/test_weapon_extra.gd.uid
+new file mode 100644
+index 0000000..22b89b7
+--- /dev/null
++++ b/tests/test_weapon_extra.gd.uid
+@@ -0,0 +1 @@
++uid://c4vhth4wbgyfq

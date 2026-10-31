@@ -1,0 +1,8 @@
+--- a/scripts/weapon.gd
++++ b/scripts/weapon.gd
+@@ -16,4 +16,4 @@
+ 
+ ## Clears the cooldown: the next try_fire() succeeds, whatever time it is given.
+ func reset() -> void:
+-	_last_shot_time = -INF
++	pass
