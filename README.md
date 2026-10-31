@@ -13,6 +13,7 @@ see that repo for how it is used.
 | `scripts/weapon.gd` | `Weapon`: fire-rate cooldown |
 | `scripts/player.gd` | `Player`: movement and firing |
 | `scripts/enemy.gd` | `Enemy`: chases its target, awards points on death |
+| `scripts/patrol_enemy.gd` | `PatrolEnemy`: patrols waypoints, chases its target when within `aggro_range` |
 | `scripts/hud.gd` | `HUD`: score label |
 | `scripts/score_manager.gd` | `ScoreManager` autoload: the running score |
 | `scenes/` | Player, enemy, HUD and main scenes |
