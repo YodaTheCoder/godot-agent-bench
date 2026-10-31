@@ -1,0 +1,132 @@
+diff --git a/scenes/main.tscn b/scenes/main.tscn
+index 0557334..e031baa 100644
+--- a/scenes/main.tscn
++++ b/scenes/main.tscn
+@@ -3,6 +3,20 @@
+ [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="1_player"]
+ [ext_resource type="PackedScene" path="res://scenes/enemy.tscn" id="2_enemy"]
+ [ext_resource type="PackedScene" path="res://scenes/hud.tscn" id="3_hud"]
++[ext_resource type="Script" path="res://scripts/wave_spawner.gd" id="4_spawner"]
++[ext_resource type="Script" path="res://scripts/wave_config.gd" id="5_wave"]
++
++[sub_resource type="Resource" id="Resource_wave1"]
++script = ExtResource("5_wave")
++enemy_scene = ExtResource("2_enemy")
++count = 3
++interval = 1.0
++
++[sub_resource type="Resource" id="Resource_wave2"]
++script = ExtResource("5_wave")
++enemy_scene = ExtResource("2_enemy")
++count = 5
++interval = 0.5
+ 
+ [node name="Main" type="Node2D"]
+ 
+@@ -18,3 +32,10 @@ position = Vector2(1050, 550)
+ target = NodePath("../Player")
+ 
+ [node name="HUD" parent="." instance=ExtResource("3_hud")]
++
++[node name="WaveSpawner" type="Node2D" parent="." node_paths=PackedStringArray("target")]
++position = Vector2(576, 40)
++script = ExtResource("4_spawner")
++waves = Array[ExtResource("5_wave")]([SubResource("Resource_wave1"), SubResource("Resource_wave2")])
++autostart = true
++target = NodePath("../Player")
+diff --git a/scripts/wave_config.gd b/scripts/wave_config.gd
+new file mode 100644
+index 0000000..95b860c
+--- /dev/null
++++ b/scripts/wave_config.gd
+@@ -0,0 +1,9 @@
++class_name WaveConfig
++extends Resource
++
++## Scene instanced for each enemy of the wave.
++@export var enemy_scene: PackedScene
++## Number of enemies in the wave.
++@export var count := 1
++## Seconds between two spawns of this wave.
++@export var interval := 1.0
+diff --git a/scripts/wave_config.gd.uid b/scripts/wave_config.gd.uid
+new file mode 100644
+index 0000000..2a7adee
+--- /dev/null
++++ b/scripts/wave_config.gd.uid
+@@ -0,0 +1 @@
++uid://0mh6u7ucttd5
+diff --git a/scripts/wave_spawner.gd b/scripts/wave_spawner.gd
+new file mode 100644
+index 0000000..be72892
+--- /dev/null
++++ b/scripts/wave_spawner.gd
+@@ -0,0 +1,61 @@
++class_name WaveSpawner
++extends Node2D
++
++signal wave_finished(index: int)
++signal all_waves_finished
++
++@export var waves: Array[WaveConfig] = []
++## Seconds between the last spawn of a wave and the first spawn of the next one.
++@export var wave_delay := 2.0
++## Call start() from _ready().
++@export var autostart := false
++## Assigned to the `target` of each spawned enemy (when set and the enemy has one).
++@export var target: Node2D
++
++var _running := false
++var _elapsed := 0.0
++var _wave := 0
++var _spawned_in_wave := 0
++var _wave_start := 0.0
++
++
++func _ready() -> void:
++	if autostart:
++		start()
++
++
++func start() -> void:
++	_running = not waves.is_empty()
++	_elapsed = 0.0
++	_wave = 0
++	_spawned_in_wave = 0
++	_wave_start = 0.0
++
++
++func _process(delta: float) -> void:
++	if not _running:
++		return
++	_elapsed += delta
++	while _running:
++		var config := waves[_wave]
++		var due := _wave_start + _spawned_in_wave * config.interval
++		if due > _elapsed:
++			return
++		_spawn(config)
++		_spawned_in_wave += 1
++		if _spawned_in_wave >= config.count:
++			var finished := _wave
++			_wave_start = due + wave_delay
++			_wave += 1
++			_spawned_in_wave = 0
++			wave_finished.emit(finished)
++			if _wave >= waves.size():
++				_running = false
++				all_waves_finished.emit()
++
++
++func _spawn(config: WaveConfig) -> void:
++	var enemy := config.enemy_scene.instantiate()
++	if target != null and "target" in enemy:
++		enemy.target = target
++	add_child(enemy)
+diff --git a/scripts/wave_spawner.gd.uid b/scripts/wave_spawner.gd.uid
+new file mode 100644
+index 0000000..0bf45f8
+--- /dev/null
++++ b/scripts/wave_spawner.gd.uid
+@@ -0,0 +1 @@
++uid://bbu7g8xnu5t7k
