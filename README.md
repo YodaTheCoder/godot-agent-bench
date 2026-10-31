@@ -15,6 +15,8 @@ see that repo for how it is used.
 | `scripts/enemy.gd` | `Enemy`: chases its target, awards points on death |
 | `scripts/hud.gd` | `HUD`: score label |
 | `scripts/score_manager.gd` | `ScoreManager` autoload: the running score |
+| `scripts/save_data.gd` | `SaveData` resource: score, player health, inventory |
+| `scripts/save_game.gd` | `SaveGame` autoload: save/load to `user://save.tres` |
 | `scenes/` | Player, enemy, HUD and main scenes |
 | `tests/regression/` | GUT regression tests |
 | `addons/gut/` | Vendored [GUT](https://github.com/bitwes/Gut) 9.7.1 (MIT) |
