@@ -21,4 +21,6 @@ func damage(amount: int) -> void:
 
 
 func heal(amount: int) -> void:
-	current += amount
+	if current == 0:
+		return
+	current = maxi(current + amount, max_health)
