@@ -1,5 +1,5 @@
 class_name Player
-extends CharacterBody2D
+extends CharacterBody2Dvar inventory: Inventory = Inventory.new()
 
 @export var speed := 200.0
 
