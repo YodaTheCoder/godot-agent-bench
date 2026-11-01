@@ -1,4 +1,6 @@
 class_name Player
+
+var inventory : Inventory = Inventory.new()
 extends CharacterBody2D
 
 @export var speed := 200.0
