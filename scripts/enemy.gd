@@ -6,6 +6,7 @@ extends CharacterBody2D
 @export var target: Node2D
 
 @onready var health: Health = $Health
+@onready var status_effects: StatusEffects = $StatusEffects
 
 
 func _ready() -> void:
