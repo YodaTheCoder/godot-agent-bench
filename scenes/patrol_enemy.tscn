@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_enemy"]
+[ext_resource type="Script" path="res://scripts/components/health.gd" id="2_health"]
+[ext_resource type="Script" path="res://scripts/patrol_enemy.gd" id="3_patrol_enemy"]
+
+[ext_resource type="Scene" path="res://scenes/enemy.tscn" id="4_enemy_scene"]
+
+[node name="PatrolEnemy" type="CharacterBody2D" node_path="$Enemy"]
+motion_mode = 1
+script = ExtResource("3_patrol_enemy")
+
+[node name="Enemy" type="CharacterBody2D" parent="." instance=ExtResource("4_enemy_scene")]
