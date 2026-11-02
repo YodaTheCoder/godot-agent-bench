@@ -1,0 +1,24 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/pickup.gd" id="1_pickup"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pickup"]
+size = Vector2(16, 16)
+
+[node name="Pickup" type="Area2D" script=ExtResource("1_pickup")]
+monitoring = true
+collision_layer = 1
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_pickup")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.8, 0.8, 0.2, 1)
+polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[connection]
+signal=body_entered
+from=NodePath("Pickup")
+to=NodePath("Pickup")
+method=_on_body_entered
