@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/pickup.gd" id="1_abcde"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_12345"]
+size = Vector2(20, 20)
+
+[node name="Pickup" type="Area2D"]
+script = ExtResource("1_abcde")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_12345")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(Vector2(-5, -5), Vector2(5, -5), Vector2(5, 5), Vector2(-5, 5))
+color = Color(1, 1, 0, 1)
