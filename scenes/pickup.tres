@@ -1,0 +1,10 @@
+[gd_resource type="CollisionShape2D" load_steps=2 format=2 uid="uid://c07f6g24p4v7z"]
+
+[resource]
+shape = SubResource(1)
+type = "Circle"
+radius = 8.0
+
+[resource]
+type = "CircleShape2D"
+radius = 8.0

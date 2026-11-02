@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=2 uid="uid://c07f6g24p4v7z"]
+
+[ext_resource type="Script" path="res://scripts/pickup.gd" id="1:53359"]
+[ext_resource type="CircleShape2D" path="res://scenes/pickup.tres" id="2:53359"]
+
+[node name="Pickup" type="Area2D"]
+script = ExtResource("1:53359")
+collision_layer = 1
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = ExtResource("2:53359")
