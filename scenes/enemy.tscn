@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_enemy"]
+[ext_resource type="Script" path="res://scripts/components/status_effects.gd" id="5_status_effects"]
 [ext_resource type="Script" path="res://scripts/components/health.gd" id="2_health"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_enemy"]
@@ -13,6 +13,9 @@ script = ExtResource("1_enemy")
 [node name="Body" type="Polygon2D" parent="."]
 color = Color(1, 0.3, 0.3, 1)
 polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
+
+[node name="StatusEffects" type="Node" parent="."]
+script = ExtResource("5_status_effects")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_enemy")

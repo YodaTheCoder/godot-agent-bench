@@ -1,0 +1,3 @@
+# Resourcelist for status_effects script
+[gd_resource type="Script" name="StatusEffects" id=4]
+script_source = "res://scripts/components/status_effects.gd"

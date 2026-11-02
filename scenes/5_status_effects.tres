@@ -1,0 +1,3 @@
+# Resourcelist for enemy StatusEffects
+[gd_resource type="Script" name="StatusEffects" id=5]
+script_source = "res://scripts/components/status_effects.gd"
