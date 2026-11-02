@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=2 hash="4333540650765154410"]
+
+[ext_resource type="Script" path="res://scripts/patrol_enemy.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/components/health.gd" id="2"]
+
+[node name="PatrolEnemy" type="PatrolEnemy"]
+script = ExtResource("1")
+points = 10
+speed = 80.0
+aggro_range = 150.0
+
+[node name="Body" type="Polygon2D" parent="."]
+polygon = PoolVector2Array( -10, -10, 10, -10, 10, 10, -10, 10 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape =ExtResource( "2" )
+
+[node name="Health" type="Health" parent="."]
+script = ExtResource("2")
