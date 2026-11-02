@@ -21,5 +21,5 @@ shape = SubResource("CircleShape2D_player")
 [node name="Health" type="Node" parent="."]
 script = ExtResource("2_health")
 
-[node name="Weapon" type="Node" parent="."]
-script = ExtResource("3_weapon")
+[node name="StatusEffects" type="Node" parent="."]
+script = res://scripts/components/status_effects.gd
