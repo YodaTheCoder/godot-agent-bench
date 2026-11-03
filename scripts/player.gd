@@ -5,6 +5,8 @@ extends CharacterBody2D
 
 @onready var weapon: Weapon = $Weapon
 
+@onready var inventory: Inventory = Inventory.new()
+
 
 static func compute_velocity(input: Vector2, speed: float) -> Vector2:
 	return input.normalized() * speed
