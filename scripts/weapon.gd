@@ -8,7 +8,8 @@ var _last_shot_time := -INF
 
 
 func try_fire(now: float) -> bool:
-	if now - _last_shot_time < fire_rate:
+	var cd = 1.0 / fire_rate
+	if _last_shot_time >= 0 and now - _last_shot_time < cd:
 		return false
 	_last_shot_time = now
 	return true
