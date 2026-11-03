@@ -1,0 +1,21 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/patrol_enemy.gd" id="1_patrol_enemy"]
+[ext_resource type="Script" path="res://scripts/components/health.gd" id="2_health"]
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="3_enemy"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_patrol_enemy"]
+radius = 12.0
+[ext_resource type="Scene" path="res://scenes/enemy.tscn" id="4_enemy_scene"]
+
+[node name="Enemy" type="CharacterBody2D" instance=ExtResource("4_enemy_scene") script = ExtResource("1_patrol_enemy")
+]
+
+[node name="Body" type="Polygon2D" parent="." instance=ExtResource("4_enemy_scene") /]
+color = Color(1, 0.3, 0.3, 1)
+polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." instance=ExtResource("4_enemy_scene") /]
+shape = SubResource("CircleShape2D_patrol_enemy")
+
+[node name="Health" type="Node" parent="." instance=ExtResource("4_enemy_scene") /]
+script = ExtResource("2_health")
