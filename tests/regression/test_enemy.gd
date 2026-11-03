@@ -27,3 +27,14 @@ func test_death_awards_points_and_frees_enemy() -> void:
 	health.damage(health.max_health)
 	assert_eq(ScoreManager.score, enemy.points)
 	assert_true(enemy.is_queued_for_deletion())
+
+
+func test_poison_on_enemy() -> void:
+	var status_effects := StatusEffects.new()
+	enemy.add_child(status_effects)
+	var poison := Poison.new()
+	poison.damage_per_second = 4.0
+	poison.duration = 1.0
+	status_effects.add(poison)
+	status_effects.tick(1.0)
+	assert_eq(enemy.get_node("Health").current, 96)

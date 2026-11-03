@@ -14,3 +14,9 @@ func test_scene_has_health_and_weapon() -> void:
 	var player: Player = add_child_autofree(load("res://scenes/player.tscn").instantiate())
 	assert_is(player.get_node("Health"), Health)
 	assert_is(player.get_node("Weapon"), Weapon)
+
+func test_status_effects_present() -> void:
+	var player: Player = add_child_autofree(load("res://scenes/player.tscn").instantiate())
+	assert_is(player.status_effects, StatusEffects)
+	assert_eq(player.status_effects.active_count(), 0)
+	assert_almost_eq(player.effective_speed(), 200.0)
