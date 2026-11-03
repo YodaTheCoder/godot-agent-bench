@@ -1,0 +1,16 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/pickup.gd" id="1_pickup"]
+[ext_resource type="RectangleShape2D" path="res://built-in_shape_1" id="4_shape"]
+
+[node name="Pickup" type="Area2D"]
+script = ExtResource("1_pickup")
+item_id = @StringName""
+qty = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = ExtResource("4_shape")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(1, 1, 0, 1)
+polygon = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
