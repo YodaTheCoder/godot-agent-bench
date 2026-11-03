@@ -31,7 +31,12 @@ func test_died_not_emitted_while_alive() -> void:
 	assert_signal_not_emitted(health, "died")
 
 
-func test_heal_restores_health_below_max() -> void:
+func test_heal_does_not_exceed_max_health() -> void:
 	health.damage(50)
+	health.heal(100)
+	assert_eq(health.current, 100)
+
+func test_heal_does_not_work_on_dead_entity() -> void:
+	health.damage(100)
 	health.heal(20)
-	assert_eq(health.current, 70)
+	assert_eq(health.current, 0)

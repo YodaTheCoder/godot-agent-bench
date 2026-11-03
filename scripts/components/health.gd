@@ -15,10 +15,12 @@ func _ready() -> void:
 func damage(amount: int) -> void:
 	if current == 0:
 		return
-	current = maxi(current - amount, 0)
+	current = max(current - amount, 0)
 	if current == 0:
 		died.emit()
 
 
 func heal(amount: int) -> void:
-	current += amount
+	if current == 0:
+		return
+	current = min(current + amount, max_health)
