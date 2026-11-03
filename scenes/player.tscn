@@ -10,6 +10,7 @@ radius = 16.0
 [node name="Player" type="CharacterBody2D"]
 motion_mode = 1
 script = ExtResource("1_player")
+inventory = { }
 
 [node name="Body" type="Polygon2D" parent="."]
 color = Color(0.3, 0.6, 1, 1)
