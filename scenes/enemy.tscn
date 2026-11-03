@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_enemy"]
 [ext_resource type="Script" path="res://scripts/components/health.gd" id="2_health"]
+[ext_resource type="PackedScene" path="res://scenes/enemy.tscn" id="1_enemy_patrol"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_enemy"]
 radius = 12.0
