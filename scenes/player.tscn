@@ -18,8 +18,11 @@ polygon = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_player")
 
-[node name="Health" type="Node" parent="."]
-script = ExtResource("2_health")
+    [node name="Health" type="Node" parent="."]
+    script = ExtResource("2_health")
 
-[node name="Weapon" type="Node" parent="."]
-script = ExtResource("3_weapon")
+    [node name="Weapon" type="Node" parent="."]
+    script = ExtResource("3_weapon")
+
+    [node name="StatusEffects" type="Node" parent="."]
+    script = ExtResource("4_status_effects")
