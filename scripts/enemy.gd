@@ -23,6 +23,9 @@ func direction_to_target() -> Vector2:
 	return global_position.direction_to(target.global_position)
 
 
+@onready var events: Events = get_node("/root/Events")
+
+
 func _on_health_died() -> void:
-	ScoreManager.add_points(points)
+	events.enemy_died.emit(points)
 	queue_free()
