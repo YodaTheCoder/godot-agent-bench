@@ -1,0 +1,4 @@
+[gd_scene format=3 inherits="res://scenes/enemy.tscn"]
+
+[node name="PatrolEnemy" type="CharacterBody2D" parent="."]
+script = ExtResource("res://scripts/patrol_enemy.gd")
