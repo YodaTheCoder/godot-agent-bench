@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/pickup.gd" id="1_pickup"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pickup"]
+radius = 8.0
+
+[node name="Pickup" type="Area2D"]
+script = ExtResource("1_pickup")
+monitoring = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_pickup")
+
+[node name="Sprite" type="Polygon2D" parent="."]
+color = Color(1, 0.8, 0, 1)
+polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[connection]
+from = NodePath("."), "body_entered"
+to = NodePath("."), "_on_body_entered"
+method = "call"
+flags = 0
