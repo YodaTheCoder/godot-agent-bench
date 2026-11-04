@@ -1,0 +1,1 @@
+A.direction_to(B) = (0,0).direction_to((10,0)) = (10,0)
