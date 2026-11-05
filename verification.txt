@@ -1,0 +1,10 @@
+
+# Test 1: Default fire_rate = 4.0
+# Expected: try_fire(0.0) → true, then try_fire(0.2) → false, then try_fire(0.25) → true
+
+# Test 2: fire_rate = 2.0  
+# Expected: try_fire(0.0) → true, then try_fire(0.4) → false, then try_fire(0.5) → true
+
+# Test 3: fire_rate = 0.5
+# Expected: try_fire(0.0) → true, then try_fire(1.5) → false, then try_fire(2.0) → true
+
