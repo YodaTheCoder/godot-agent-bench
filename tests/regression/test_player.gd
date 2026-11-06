@@ -14,3 +14,4 @@ func test_scene_has_health_and_weapon() -> void:
 	var player: Player = add_child_autofree(load("res://scenes/player.tscn").instantiate())
 	assert_is(player.get_node("Health"), Health)
 	assert_is(player.get_node("Weapon"), Weapon)
+	assert_is(player.get_node("StatusEffects"), StatusEffects)
