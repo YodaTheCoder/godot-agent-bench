@@ -9,3 +9,7 @@ func add_points(n: int) -> void:
 
 func reset() -> void:
 	score = 0
+
+
+func _ready() -> void:
+	Events.enemy_died.connect(add_points)
