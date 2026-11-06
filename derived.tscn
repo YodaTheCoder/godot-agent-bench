@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[node name="Derived" type="Node2D" parent="."]
+
+[base]
+path = "res://base.tscn"
