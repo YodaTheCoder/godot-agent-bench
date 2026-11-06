@@ -1,0 +1,1 @@
+{"class": "Node2D", "fields": {"name": "Pickup"}, "nodes": [{"class": "Area2D", "fields": {"name": "Area2D"}, "script": {"resource_path": "res://scripts/pickup.gd"}, "nodes": [{"class": "CollisionShape2D", "fields": {"name": "CollisionShape2D"}}]}]}
