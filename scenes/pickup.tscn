@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2 uid="uid://c671v37j548xu"]
+
+[ext_resource type="Script" path="res://scripts/pickup.gd" id="1"]
+
+[scene_entity instance_placeholder_path="res://scenes/pickup.tscn" type="Area2D"]
+
+[node name="Area2D" type="Area2D"]
+script = ExtResource("1")
+collision_layer = 1
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = Shape2D(ResourceUID, "uid://74f6g35k3778n")
