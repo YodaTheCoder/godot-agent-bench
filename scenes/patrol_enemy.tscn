@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=2 uid="uid://cq89x376w524"]
+
+[ext_resource type="PackedScene" path="res://scenes/enemy.tscn" id="1"]
+[ext_resource type="Script" path="res://scripts/patrol_enemy.gd" id="2"]
+
+[node name="PatrolEnemy" type="PatrolEnemy" parent="."]
+script = ExtResource("2")
+waypoints = PackedVector2Array( Vector2(0, 0), Vector2(100, 0), Vector2(100, 100) )
+aggro_range = 150.0
+
+[node name="Body" type="Polygon2D" parent="."]
+polygon = PackedVector2Array( Vector2(-15, -30), Vector2(15, -30), Vector2(15, 30), Vector2(-15, 30) )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = ExtResource("uid://c0d84f3d697d1cd9")
+position = Vector2(0, 0)
+
+[node name="Health" type="Health" parent="."]
+script = ExtResource("uid://d1f9583d33a212d1")
