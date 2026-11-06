@@ -1,6 +1,8 @@
 class_name Player
 extends CharacterBody2D
 
+var inventory: Inventory = Inventory.new()
+
 @export var speed := 200.0
 
 @onready var weapon: Weapon = $Weapon
