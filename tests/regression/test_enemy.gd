@@ -27,3 +27,10 @@ func test_death_awards_points_and_frees_enemy() -> void:
 	health.damage(health.max_health)
 	assert_eq(ScoreManager.score, enemy.points)
 	assert_true(enemy.is_queued_for_deletion())
+
+
+func test_patrol_enemy_extends_enemy() -> void:
+	var patrol_enemy = add_child_autofree(load("res://scenes/patrol_enemy.tscn").instantiate())
+	assert_true(patrol_enemy is Enemy)
+	assert_eq(patrol_enemy.aggro_range, 150.0)
+	assert_eq(patrol_enemy.next_waypoint_index(), 0)
