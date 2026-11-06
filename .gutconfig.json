@@ -1,5 +1,5 @@
 {
-  "dirs": ["res://tests/regression"],
+  "dirs": ["res://tests/regression", "res://tests"],
   "include_subdirs": true,
   "log_level": 1
 }
