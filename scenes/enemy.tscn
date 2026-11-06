@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_enemy"]
 [ext_resource type="Script" path="res://scripts/components/health.gd" id="2_health"]
+[ext_resource type="Script" path="res://scripts/components/status_effects.gd" id="3_status_effects"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_enemy"]
 radius = 12.0
@@ -19,3 +20,6 @@ shape = SubResource("CircleShape2D_enemy")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("2_health")
+
+[node name="StatusEffects" type="Node" parent="."]
+script = ExtResource("3_status_effects")
