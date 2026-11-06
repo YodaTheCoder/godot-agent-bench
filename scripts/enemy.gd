@@ -24,5 +24,5 @@ func direction_to_target() -> Vector2:
 
 
 func _on_health_died() -> void:
-	ScoreManager.add_points(points)
+	Events.enemy_died.emit(points)
 	queue_free()
