@@ -1,20 +1,32 @@
-[gd_scene format=3]
+[gd_scene format=4]
 
-[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="1_player"]
-[ext_resource type="PackedScene" path="res://scenes/enemy.tscn" id="2_enemy"]
-[ext_resource type="PackedScene" path="res://scenes/hud.tscn" id="3_hud"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id=1]
+[ext_resource type="PackedScene" path="res://scenes/enemy.tscn" id=2]
+[ext_resource type="PackedScene" path="res://scenes/hud.tscn" id=3]
+
+[sub_resource type="WaveConfig" id=4]
+tunneling = false
+enemy_scene = ExtResource(2)
+count = 1
+interval = 1.0
 
 [node name="Main" type="Node2D"]
 
-[node name="Player" parent="." instance=ExtResource("1_player")]
+[node name="Player" parent="." instance=ExtResource(1)]
 position = Vector2(576, 324)
 
-[node name="Enemy1" parent="." node_paths=PackedStringArray("target") instance=ExtResource("2_enemy")]
+[node name="WaveSpawner" parent="." type="WaveSpawner"]
+autostart = true
+target = NodePath("../Player")
+wave_delay = 2.0
+waves = Array(SubResource(4))
+
+[node name="Enemy1" parent="." node_paths=PackedStringArray("target") instance=ExtResource(2)]
 position = Vector2(100, 100)
 target = NodePath("../Player")
 
-[node name="Enemy2" parent="." node_paths=PackedStringArray("target") instance=ExtResource("2_enemy")]
+[node name="Enemy2" parent="." node_paths=PackedStringArray("target") instance=ExtResource(2)]
 position = Vector2(1050, 550)
 target = NodePath("../Player")
 
-[node name="HUD" parent="." instance=ExtResource("3_hud")]
+[node name="HUD" parent="." instance=ExtResource(3)]
