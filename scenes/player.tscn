@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_player"]
 [ext_resource type="Script" path="res://scripts/components/health.gd" id="2_health"]
 [ext_resource type="Script" path="res://scripts/weapon.gd" id="3_weapon"]
+[ext_resource type="Script" path="res://scripts/components/status_effects.gd" id="4_status_effects"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_player"]
 radius = 16.0
@@ -11,15 +12,18 @@ radius = 16.0
 motion_mode = 1
 script = ExtResource("1_player")
 
-[node name="Body" type="Polygon2D" parent="."]
+[node name="Body" type="Polygon2D" parent="." ]
 color = Color(0.3, 0.6, 1, 1)
 polygon = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." ]
 shape = SubResource("CircleShape2D_player")
 
-[node name="Health" type="Node" parent="."]
+[node name="Health" type="Node" parent="." ]
 script = ExtResource("2_health")
 
-[node name="Weapon" type="Node" parent="."]
+[node name="Weapon" type="Node" parent="." ]
 script = ExtResource("3_weapon")
+
+[node name="StatusEffects" type="Node" parent="." ]
+script = ExtResource("4_status_effects")
