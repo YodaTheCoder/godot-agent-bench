@@ -3,6 +3,8 @@
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/enemy.tscn" id="2_enemy"]
 [ext_resource type="PackedScene" path="res://scenes/hud.tscn" id="3_hud"]
+[ext_resource type="Script" path="res://scripts/wave_spawner.gd" id="4_wave_spawner"]
+[ext_resource type="Resource" path="res://scripts/wave_config.gd" id="5_wave_config"]
 
 [node name="Main" type="Node2D"]
 
@@ -18,3 +20,7 @@ position = Vector2(1050, 550)
 target = NodePath("../Player")
 
 [node name="HUD" parent="." instance=ExtResource("3_hud")]
+
+[node name="WaveSpawner" parent="." script=ExtResource("4_wave_spawner")]
+autostart = true
+target = NodePath("./Player")
