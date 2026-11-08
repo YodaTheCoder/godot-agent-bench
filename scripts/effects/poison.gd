@@ -1,0 +1,18 @@
+class_name Poison
+extends StatusEffect
+
+@export var damage_per_second := 5.0
+
+var damage_owed: float = 0.0
+
+func apply_tick(target: Node, delta: float) -> void:
+	if not target.has_node("Health"):
+		return
+	
+	damage_owed += damage_per_second * delta
+	var damage_to_deal: int = int(damage_owed)
+	damage_owed -= damage_to_deal
+	
+	var health_node := target.get_node("Health")
+	if health_node is Health:
+		health_node.damage(damage_to_deal)
