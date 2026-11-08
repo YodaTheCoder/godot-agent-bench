@@ -16,6 +16,7 @@ config/features=PackedStringArray("4.7")
 
 [autoload]
 
+Events="*res://scripts/events.gd"
 ScoreManager="*res://scripts/score_manager.gd"
 
 [editor_plugins]
