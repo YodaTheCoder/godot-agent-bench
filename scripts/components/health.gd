@@ -2,6 +2,7 @@ class_name Health
 extends Node
 
 signal died
+signal damaged(amount: int, remaining: int)
 
 @export var max_health := 100
 
@@ -15,9 +16,12 @@ func _ready() -> void:
 func damage(amount: int) -> void:
 	if current == 0:
 		return
+	var previous = current
 	current = maxi(current - amount, 0)
-	if current == 0:
-		died.emit()
+	if current != previous:
+		damaged.emit(previous - current, current)
+		if current == 0:
+			died.emit()
 
 
 func heal(amount: int) -> void:
