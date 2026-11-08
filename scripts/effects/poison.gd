@@ -1,0 +1,15 @@
+class_name Poison extends StatusEffect
+
+@export var damage_per_second := 5.0
+
+var _owed: float = 0.0
+var _last_int: int = 0
+
+func apply_tick(target: Node, delta: float) -> void:
+	_owed += damage_per_second * delta
+	var health := target.get_node_or_null("Health") as Health
+	if health == null:
+		return
+	var to_deal := int(_owed) - _last_int
+	health.damage(to_deal)
+	_last_int = int(_owed)
