@@ -18,3 +18,18 @@ position = Vector2(1050, 550)
 target = NodePath("../Player")
 
 [node name="HUD" parent="." instance=ExtResource("3_hud")]
+
+[node name="WaveSpawner" parent="." type="Node2D"]
+script = ExtResource("res://scripts/wave_spawner.gd")
+autostart = true
+target = NodePath("../Player")
+
+[node name="WaveConfig1" parent="WaveSpawner" type="WaveConfig"]
+enemy_scene = ExtResource("2_enemy")
+count = 3
+interval = 0.5
+
+[node name="WaveConfig2" parent="WaveSpawner" type="WaveConfig"]
+enemy_scene = ExtResource("2_enemy")
+count = 2
+interval = 0.25
