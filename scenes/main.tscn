@@ -18,3 +18,8 @@ position = Vector2(1050, 550)
 target = NodePath("../Player")
 
 [node name="HUD" parent="." instance=ExtResource("3_hud")]
+
+[node name="WaveSpawner" parent="." type="Node2D"]
+autostart = true
+target = NodePath("../Player")
+wave_delay = 2.0
