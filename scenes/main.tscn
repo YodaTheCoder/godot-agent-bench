@@ -9,6 +9,22 @@
 [node name="Player" parent="." instance=ExtResource("1_player")]
 position = Vector2(576, 324)
 
+[node name="WaveSpawner" parent="." type="Node2D"]
+autostart = true
+target = NodePath("./Player")
+waves = [
+	{
+		"enemy_scene": ExtResource("2_enemy"),
+		"count": 3,
+		"interval": 0.5
+	},
+	{
+		"enemy_scene": ExtResource("2_enemy"),
+		"count": 2,
+		"interval": 0.25
+	}
+]
+
 [node name="Enemy1" parent="." node_paths=PackedStringArray("target") instance=ExtResource("2_enemy")]
 position = Vector2(100, 100)
 target = NodePath("../Player")
