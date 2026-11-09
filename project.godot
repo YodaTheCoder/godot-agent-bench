@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.7")
 [autoload]
 
 ScoreManager="*res://scripts/score_manager.gd"
+SaveGame="*res://scripts/save_game.gd"
 
 [editor_plugins]
 
