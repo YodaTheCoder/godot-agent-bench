@@ -1,0 +1,9 @@
+[gd_scene format=3]
+
+[sub_resource type="WaveConfig" id=0]
+enemy_scene = null
+count = 1
+interval = 1.0
+
+[node name="Test" type="Node2D"]
+my_array = []
