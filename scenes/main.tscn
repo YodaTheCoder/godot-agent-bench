@@ -4,6 +4,11 @@
 [ext_resource type="PackedScene" path="res://scenes/enemy.tscn" id="2_enemy"]
 [ext_resource type="PackedScene" path="res://scenes/hud.tscn" id="3_hud"]
 
+[sub_resource type="WaveConfig" id="WaveConfig_1"]
+enemy_scene = ExtResource("2_enemy")
+count = 1
+interval = 1.0
+
 [node name="Main" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_player")]
@@ -18,3 +23,8 @@ position = Vector2(1050, 550)
 target = NodePath("../Player")
 
 [node name="HUD" parent="." instance=ExtResource("3_hud")]
+
+[node name="WaveSpawner" parent="." type="WaveSpawner"]
+autostart = true
+target = NodePath("../Player")
+waves = Array(SubResource("WaveConfig_1"))
