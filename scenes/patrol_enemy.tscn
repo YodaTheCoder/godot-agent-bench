@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=2 uid="uid://c05d05x7jwz8"]
+
+[ext_resource type="Script" path="res://scripts/patrol_enemy.gd" id="1_0"]
+[ext_resource type="Script" path="res://scripts/components/health.gd" id="1_1"]
+
+[node name="PatrolEnemy" type="PatrolEnemy" parent="."]
+script = ExtResource("1_0")
+
+[node name="Body" type="Polygon2D" parent="."]
+polygon = PackedVector2Array( -16, -16, 16, -16, 16, 16, -16, 16 )
+visible = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = CircleShape2D(radius=16.0)
+visible = false
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("1_1")
