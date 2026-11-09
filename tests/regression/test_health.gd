@@ -35,3 +35,20 @@ func test_heal_restores_health_below_max() -> void:
 	health.damage(50)
 	health.heal(20)
 	assert_eq(health.current, 70)
+
+
+func test_heal_does_not_overheal() -> void:
+	health.damage(10)
+	health.heal(50)
+	assert_eq(health.current, 100)
+
+
+func test_heal_at_max_health() -> void:
+	health.heal(25)
+	assert_eq(health.current, 100)
+
+
+func test_heal_does_not_revive_dead_entity() -> void:
+	health.damage(100)
+	health.heal(20)
+	assert_eq(health.current, 0)
