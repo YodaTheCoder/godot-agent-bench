@@ -1,0 +1,16 @@
+[gd_resource type="Scene" format=2]
+
+[ext_resource type="Script" path="res://scripts/pickup.gd" id="1_517j0"]
+
+[node name="Pickup" type="Area2D"]
+script = ExtResource("1_517j0")
+collision_layer = 1
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource(1)
+position = Vector2(0, 0)
+
+[resource]
+type = "CircleShape2D"
+radius = 8.0
